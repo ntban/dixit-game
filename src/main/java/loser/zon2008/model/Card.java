@@ -1,43 +1,79 @@
 package loser.zon2008.model;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
-public class Card implements Serializable{
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "card")
+public class Card implements Serializable {
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -6070990636439137410L;
 	
+	@Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
+	@Column(name = "image")
 	private String image;
-	private Player owner;
-	private ArrayList<Player> choosers;
+	@Column(name = "owner")
+	private String owner;
+	@Column(name = "choosers")
+	private String choosers;
+	@Column(name = "used")
+	private String used;
 	
-	public Card(){}
-	
+	public String getUsed() {
+		return used;
+	}
 
-	
+	public void setUsed(String used) {
+		this.used = used;
+	}
+
+	public Card() {
+	}
+
 	public Card(String image) {
 		super();
 		this.image = image;
 	}
 
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
 	public String getImage() {
 		return image;
 	}
+
 	public void setImage(String image) {
 		this.image = image;
 	}
-	public Player getOwner() {
+
+	public String getOwner() {
 		return owner;
 	}
-	public void setOwner(Player owner) {
+
+	public void setOwner(String owner) {
 		this.owner = owner;
 	}
-	public ArrayList<Player> getChoosers() {
+
+	public String getChoosers() {
 		return choosers;
 	}
-	public void setChoosers(ArrayList<Player> choosers) {
+
+	public void setChoosers(String choosers) {
 		this.choosers = choosers;
 	}
 

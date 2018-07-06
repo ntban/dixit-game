@@ -17,47 +17,26 @@ public class DixitController {
 	ArrayList<Card> cards;
 	int countCards = 126;
 	int numberPlayers;
-	int notUsedCard ;
+	int notUsedCard;
 	ArrayList<Player> players;
-	
+
 	@RequestMapping(path = "/startGame", method = RequestMethod.POST)
-    public String startGame(HttpServletRequest request) {
-		players = (ArrayList<Player>)request.getSession().getAttribute("players");
-		numberPlayers = players.size();
-		request.getSession().setAttribute("numberPlayers", numberPlayers);
+	public String startGame(HttpServletRequest request) {
 		createCards();
-		request.getSession().setAttribute("notUsedCard", notUsedCard);
-		request.getSession().setAttribute("players", players);
-		request.getSession().setAttribute("cards", cards);
- 
-        return "redirect:/";
-    }
-	
-	private void createCards(){
+		return "redirect:/";
+	}
+
+	private void createCards() {
 		ArrayList<Integer> images = new ArrayList<>();
-		for(int i=0; i<countCards;i++){
+		for (int i = 0; i < countCards; i++) {
 			images.add(i);
 		}
 		Collections.shuffle(images);
-		
+
 		cards = new ArrayList<>();
-		for(int i=0; i<countCards;i++){
-			cards.add(new Card("_"+images.get(i)+".jpg"));
+		for (int i = 0; i < countCards; i++) {
+			cards.add(new Card("_" + images.get(i) + ".jpg"));
 		}
-		notUsedCard = 0;
-		for(int i=0; i<numberPlayers;i++){
-			Player player = players.get(i);
-			ArrayList<Card> havings = new ArrayList<>();
-			for (int j = 0; j < 6; j++) {
-				Card card = cards.get(notUsedCard);
-				card.setOwner(player);
-				havings.add(card);
-				cards.set(notUsedCard, card);
-				notUsedCard++;
-			}
-			player.setHavings(havings);
-			players.set(i, player);
-		}
-		
+
 	}
 }
