@@ -34,7 +34,10 @@
          </form>
       </div>
       <div>
-       <form id="startGame" name="startGame">
+       <form id="startGame" name="startGame" method="post" action="/registerGame">
+       <input type="text" autocomplete="off"
+                  placeholder="Go to game"/>
+                  <button type="submit">OK</button>
        </form>
       </div>       
       <script th:src="@{/js/main.js}"></script>

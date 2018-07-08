@@ -38,6 +38,10 @@ public class MainController {
 
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
 	public String doLogin(HttpServletRequest request, @RequestParam(defaultValue = "") String username) {
+		if (request.getSession().getAttribute("username") != null) {
+			return "redirect:/";
+		}
+
 		username = username.trim();
 
 		if (username.isEmpty()) {
@@ -64,19 +68,19 @@ public class MainController {
 		List<Card> cards = cardRepository.getFirstSix();
 
 		List<Card> cards1 = new ArrayList<>();
-		for (int i = 0; i < 3; i++){
+		for (int i = 0; i < 3; i++) {
 			cards1.add(cards.get(i));
 			cards.get(i).setUsed("used");
 		}
 		model.addAttribute("highCards", cards1);
 
 		List<Card> cards2 = new ArrayList<>();
-		for (int i = 3; i < 6; i++){
+		for (int i = 3; i < 6; i++) {
 			cards2.add(cards.get(i));
 			cards.get(i).setUsed("used");
 		}
 		model.addAttribute("lowCards", cards2);
-		
+
 		cardRepository.saveAll(cards);
 		return "card-page";
 	}
