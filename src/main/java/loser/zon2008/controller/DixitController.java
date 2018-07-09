@@ -2,6 +2,7 @@ package loser.zon2008.controller;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -13,18 +14,18 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import loser.zon2008.model.Card;
 import loser.zon2008.model.Player;
+import loser.zon2008.repository.CardRepository;
 import loser.zon2008.repository.PlayerRepository;
 
 @Controller
 public class DixitController {
-	ArrayList<Card> cards;
-	int countCards = 126;
-	int numberPlayers;
-	int notUsedCard;
-	ArrayList<Player> players;
+	List<Card> cards;
+	ArrayList<Player> players = new ArrayList<>();
 
 	@Autowired
 	private PlayerRepository playerRepository;
+	@Autowired
+	private CardRepository cardRepository;
 
 	@RequestMapping(path = "/startGame", method = RequestMethod.POST)
 	public String startGame(HttpServletRequest request) {
@@ -40,25 +41,34 @@ public class DixitController {
 			return "redirect:/";
 		}
 		
+		if(players.size() == 0){
+			cards = cardRepository.findAll();
+		}
+		
 		Player player = new Player(username);
 		player = playerRepository.save(player);
-		request.getSession().setAttribute("player", player);
-		model.addAttribute("username", username);
 		
-		return "chat";
+		if(players.size() == 0){
+			player.setFirstPlayer("TRUE");
+		}
+		
+		request.getSession().setAttribute("player", player);
+		players.add(player);
+				
+		return "redirect:/";
 	}
 
 	private void createCards() {
-		ArrayList<Integer> images = new ArrayList<>();
-		for (int i = 0; i < countCards; i++) {
-			images.add(i);
-		}
-		Collections.shuffle(images);
+		Collections.shuffle(cards);
 
-		cards = new ArrayList<>();
-		for (int i = 0; i < countCards; i++) {
-			cards.add(new Card("_" + images.get(i) + ".jpg"));
+		//set for players
+		int i = 0;
+		for(Player p:players){
+			String cardOfPlayer = "";
+			for (int j = 0; j < 6; j++) {
+				cardOfPlayer += cards.get(i++).getId()+",";
+			}
+			p.setCards(cardOfPlayer);
 		}
-
 	}
 }

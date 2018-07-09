@@ -30,6 +30,24 @@ public class Player implements Serializable {
 	private String choose;
 	@Column(name = "cards")
 	private String cards;
+	
+	private String firstPlayer;
+	
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getFirstPlayer() {
+		return firstPlayer;
+	}
+
+	public void setFirstPlayer(String firstPlayer) {
+		this.firstPlayer = firstPlayer;
+	}
 
 	public Player() {
 	}

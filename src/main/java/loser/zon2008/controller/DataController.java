@@ -22,12 +22,12 @@ public class DataController {
 	@GetMapping("/create-cards")
 	public void createCards() {
 		List<Card> cards = new ArrayList<>();
-		for(int i=2;i<126;i++){
-			
+		for(int i=0;i<150;i++){
+			Card c = new Card("_"+i+".jpg");
+			c.setId(i);
+			cards.add(c);
 		}
-		Card card = new Card("_000.jpg");
-		card.setId(1);
-		cardRepository.save(card);
+		cardRepository.saveAll(cards);
 	}
 	
 }

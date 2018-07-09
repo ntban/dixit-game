@@ -35,6 +35,8 @@ public class MainController {
 	public String showLoginPage() {
 		return "login";
 	}
+	
+	List<String> users = new ArrayList<>();
 
 	@RequestMapping(path = "/login", method = RequestMethod.POST)
 	public String doLogin(HttpServletRequest request, @RequestParam(defaultValue = "") String username) {
@@ -49,6 +51,7 @@ public class MainController {
 		}
 
 		request.getSession().setAttribute("username", username);
+		users.add(username);
 
 		return "redirect:/";
 	}
