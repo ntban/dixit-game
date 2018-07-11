@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import loser.zon2008.model.Card;
 import loser.zon2008.repository.CardRepository;
-import loser.zon2008.repository.ResourceNotFoundException;
 
 @RestController
 @RequestMapping("/api")

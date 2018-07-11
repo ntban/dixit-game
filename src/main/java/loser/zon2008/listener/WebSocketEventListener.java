@@ -12,6 +12,7 @@ import org.springframework.web.socket.messaging.SessionConnectedEvent;
 import org.springframework.web.socket.messaging.SessionDisconnectEvent;
 
 import loser.zon2008.model.ChatMessage;
+import loser.zon2008.repository.PlayerRepository;
  
 @Component
 public class WebSocketEventListener {
@@ -25,22 +26,26 @@ public class WebSocketEventListener {
     public void handleWebSocketConnectListener(SessionConnectedEvent event) {
         logger.info("Received a new web socket connection");
     }
- 
-    @EventListener
-    public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
-        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
- 
-        String username = (String) headerAccessor.getSessionAttributes().get("username");
-         
-        if(username != null) {
-            logger.info("User Disconnected : " + username);
- 
-            ChatMessage chatMessage = new ChatMessage();
-            chatMessage.setType(ChatMessage.MessageType.LEAVE);
-            chatMessage.setSender(username);
- 
-            messagingTemplate.convertAndSend("/topic/publicChatRoom", chatMessage);
-        }
-    }
+    
+//    @Autowired
+//    PlayerRepository playerRepository;
+// 
+//    @EventListener
+//    public void handleWebSocketDisconnectListener(SessionDisconnectEvent event) {
+//        StompHeaderAccessor headerAccessor = StompHeaderAccessor.wrap(event.getMessage());
+// 
+//        String username = (String) headerAccessor.getSessionAttributes().get("username");
+//        
+//        if(username != null) {
+//            logger.info("User Disconnected : " + username);
+//            playerRepository.deletePlayer(username);
+// 
+//            ChatMessage chatMessage = new ChatMessage();
+//            chatMessage.setType(ChatMessage.MessageType.LEAVE);
+//            chatMessage.setSender(username);
+// 
+//            messagingTemplate.convertAndSend("/topic/publicChatRoom", chatMessage);
+//        }
+//    }
      
 }

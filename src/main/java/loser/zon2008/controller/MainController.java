@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import loser.zon2008.model.Card;
-import loser.zon2008.model.Player;
 import loser.zon2008.repository.CardRepository;
 
 @Controller

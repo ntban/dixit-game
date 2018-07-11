@@ -32,7 +32,16 @@ public class Player implements Serializable {
 	private String cards;
 	
 	private String firstPlayer;
+	private String started;
 	
+	public String getStarted() {
+		return started;
+	}
+
+	public void setStarted(String started) {
+		this.started = started;
+	}
+
 	public Integer getId() {
 		return id;
 	}
